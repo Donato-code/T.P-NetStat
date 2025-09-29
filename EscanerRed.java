@@ -9,7 +9,7 @@ public class EscanerRed extends JFrame {
     private JTable table;
     private JTextField ipInicioField;
     private JTextField ipFinField;
-    private JButton scanButton, clearButton, saveButton, netstatButton;
+    private JButton scanButton, clearButton, saveButton, netstatButton, aboutButton;
     private JProgressBar progressBar;
     private JTextArea netstatOutput;
 
@@ -53,11 +53,13 @@ public class EscanerRed extends JFrame {
         clearButton = new JButton("Limpiar");
         saveButton = new JButton("Guardar");
         netstatButton = new JButton("Netstat");
+        aboutButton = new JButton("Acerca de"); // NUEVO BOTÓN
 
         buttonPanel.add(scanButton);
         buttonPanel.add(clearButton);
         buttonPanel.add(saveButton);
         buttonPanel.add(netstatButton);
+        buttonPanel.add(aboutButton); // lo agregamos al panel
 
         bottomPanel.add(buttonPanel, BorderLayout.NORTH);
 
@@ -80,6 +82,7 @@ public class EscanerRed extends JFrame {
         clearButton.addActionListener(e -> limpiarTabla());
         saveButton.addActionListener(e -> guardarResultados());
         netstatButton.addActionListener(e -> ejecutarNetstat());
+        aboutButton.addActionListener(e -> mostrarAcercaDe()); // acción del nuevo botón
     }
 
     private void escanearRed() {
@@ -167,7 +170,6 @@ public class EscanerRed extends JFrame {
     }
 
     private void ejecutarNetstat() {
-        // Aquí usamos netstat con 3 modificadores: -a, -n, -o
         String[] comandos = {"netstat -a", "netstat -n", "netstat -o"};
         netstatOutput.setText("");
 
@@ -186,6 +188,13 @@ public class EscanerRed extends JFrame {
                 netstatOutput.append("Error ejecutando " + comando + ": " + e.getMessage() + "\n\n");
             }
         }
+    }
+
+    private void mostrarAcercaDe() {
+        JOptionPane.showMessageDialog(this,
+                "Escáner de Red - Proyecto Final\nAutores: Tu Nombre / Tu Grupo\nVersión: 1.1",
+                "Acerca de",
+                JOptionPane.INFORMATION_MESSAGE);
     }
 
     private boolean esIpValida(String ip) {
